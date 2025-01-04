@@ -46,8 +46,9 @@ steps:
     testResultsFiles: '**/*.trx'
     
 - task: PublishCodeCoverageResults@2
+  displayName: 'Publish code coverage from $(Agent.TempDirectory)'
   inputs:
-    summaryFileLocation: $(Build.SourcesDirectory)/coverage/coverage.opencover.xml
+    summaryFileLocation: $(Agent.TempDirectory)/coverage/coverage.opencover.xml
 
 - task: DotNetCoreCLI@2
   inputs:
