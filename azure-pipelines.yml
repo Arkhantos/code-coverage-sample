@@ -30,7 +30,7 @@ steps:
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
-    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\coverage\coverage.opencover.xml" "-targetdir:coverage\Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
+    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\coverage\coverage.opencover.xml" "-targetdir:coverage\Cobertura" "-reporttypes:Cobertura"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 
@@ -47,7 +47,7 @@ steps:
     
 - task: PublishCodeCoverageResults@2
   inputs:
-    summaryFileLocation: $(Build.SourcesDirectory)/coverage/Cobertura/Cobertura.xml
+    summaryFileLocation: $(Build.SourcesDirectory)/coverage/coverage.opencover.xml
 
 - task: DotNetCoreCLI@2
   inputs:
