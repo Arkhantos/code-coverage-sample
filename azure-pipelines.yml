@@ -20,7 +20,7 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/coverage/coverage.opencover.xml'
+    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\coverage\coverage.opencover.xml'
 
 - script: dotnet build $(solution) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration).'
@@ -49,7 +49,7 @@ steps:
 - task: PublishCodeCoverageResults@2
   displayName: 'Publish code coverage from $(Build.SourcesDirectory)'
   inputs:
-    summaryFileLocation: $(Build.SourcesDirectory)/coverage/coverage.opencover.xml
+    summaryFileLocation: $(Build.SourcesDirectory)\coverage\coverage.opencover.xml
 
 - task: DotNetCoreCLI@2
   inputs:
