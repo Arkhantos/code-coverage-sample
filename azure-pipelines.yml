@@ -9,7 +9,7 @@ trigger:
 
 pool:
   name: 'TestPool'
-  demands: Agent.Name -equals 'jaba-windows' #$(imageName)
+  demands: Agent.Name -equals 'jaba-windows'
 
 steps:
 - task: SonarCloudPrepare@3
