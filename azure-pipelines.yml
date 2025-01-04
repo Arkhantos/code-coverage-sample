@@ -16,7 +16,7 @@ trigger:
 
 pool:
   name: 'TestPool'
-  demands: Agent.Name -equals jaba-windows
+  vmImage: $(imageName)
 
 steps:
 - task: SonarCloudPrepare@3
