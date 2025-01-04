@@ -7,23 +7,25 @@ variables:
 strategy:
   matrix:
     linux:
-      imageName: 'ubuntu-16.04'
+      imageName: 'jaba-vm'
     windows:
-      imageName: 'vs2017-win2016'
+      imageName: 'jaba-windows'
 
 trigger:
 - master
 
 pool:
+  name: 'TestPool'
   vmImage: $(imageName)
 
 steps:
-- task: SonarCloudPrepare@1
+- task: SonarCloudPrepare@3
   inputs:
-    SonarCloud: '66420b06-0308-4157-9b80-ef53c71c6596'
-    organization: 'wulfland-github'
-    projectKey: 'cov-demo'
-    projectName: 'Coverage Demo'
+    SonarQube: 'SonarCloud'
+    organization: 'sonarcloud-jaba'
+    scannerMode: 'dotnet'
+    projectKey: 'jabadrian_code-coverage-sample'
+    projectName: 'code-coverage-sample'
     extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/coverage/coverage.opencover.xml'
 
 - script: dotnet build $(solution) --configuration $(buildConfiguration)
@@ -45,11 +47,11 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 
-- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+- task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
 
-- task: SonarCloudPublish@1
-  displayName: 'Publish Quality Gate Results'
+- task: SonarCloudPublish@3
+  displayName: 'Publish Quality Gate Result'
 
 - task: PublishTestResults@2
   inputs:
@@ -72,3 +74,6 @@ steps:
     zipAfterPublish: true
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact (WebApp.zip)'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
