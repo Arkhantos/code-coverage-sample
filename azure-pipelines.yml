@@ -20,20 +20,14 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\coverage\coverage.opencover.xml'
+    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\*\*coverage.xml'
 
 - script: dotnet build $(solution) --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration).'
 
 - script: |
-    dotnet test --logger trx --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=$(Build.SourcesDirectory)/coverage/ $(testProject)
+    dotnet test --logger trx --no-build --collect "Code Coverage"
   displayName: 'dotnet test'
-
-- script: |
-    dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
-    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\coverage\coverage.opencover.xml" "-targetdir:coverage\Cobertura" "-reporttypes:Cobertura"
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: Run Reportgenerator on Windows
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
@@ -45,11 +39,6 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
-    
-- task: PublishCodeCoverageResults@2
-  displayName: 'Publish code coverage from $(Build.SourcesDirectory)'
-  inputs:
-    summaryFileLocation: $(Build.SourcesDirectory)\coverage\coverage.opencover.xml
 
 - task: DotNetCoreCLI@2
   inputs:
