@@ -3,13 +3,6 @@ variables:
     buildConfiguration: "Debug"
     testProject: "tests/MySample.Tests"
     solution: "MySample.sln"
-    
-strategy:
-  matrix:
-    linux:
-      imageName: 'jaba-vm'
-    windows:
-      imageName: 'jaba-windows'
 
 trigger:
 - master
