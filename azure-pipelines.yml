@@ -13,6 +13,7 @@ pool:
 
 steps:
 - task: SonarCloudPrepare@3
+  displayName: 'coverage from: $(Build.SourcesDirectory)'
   inputs:
     SonarQube: 'SonarCloud'
     organization: 'sonarcloud-jaba'
@@ -46,9 +47,9 @@ steps:
     testResultsFiles: '**/*.trx'
     
 - task: PublishCodeCoverageResults@2
-  displayName: 'Publish code coverage from $(Agent.TempDirectory)'
+  displayName: 'Publish code coverage from $(Build.SourcesDirectory)'
   inputs:
-    summaryFileLocation: $(Agent.TempDirectory)/coverage/coverage.opencover.xml
+    summaryFileLocation: $(Build.SourcesDirectory)/coverage/coverage.opencover.xml
 
 - task: DotNetCoreCLI@2
   inputs:
