@@ -16,7 +16,7 @@ trigger:
 
 pool:
   name: 'TestPool'
-  vmImage: $(imageName)
+  demands: Agent.Name -equals $(imageName)
 
 steps:
 - task: SonarCloudPrepare@3
