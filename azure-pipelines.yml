@@ -26,7 +26,7 @@ steps:
   displayName: 'dotnet build $(buildConfiguration).'
 
 - script: |
-    dotnet test --logger trx --no-build --collect "XPlat Code Coverage" /p:Configuration=$Cfg /p:CollectCoverage=true /p:CoverletOutput=.\CodeCoverage\ --% /p:CoverletOutputFormat=\"cobertura,opencover\"
+    dotnet test --logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[Service.Data]*
   displayName: 'dotnet test'
 
 - task: SonarCloudAnalyze@3
