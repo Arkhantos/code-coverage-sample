@@ -12,7 +12,7 @@ namespace MySample.NUnitTests
         {
             Assert.AreEqual(ImportantLib.Add(x, y), z);
         }
-/*
+
         [TestCase(1, 2, 3)]
         [TestCase(2, 3, 5)]
         [TestCase(3, 3, 6)]
@@ -20,7 +20,7 @@ namespace MySample.NUnitTests
         {
             Assert.AreEqual(ImportantLib.Add(x, y), z);
         }
-
+/*
         [TestCase(3, 2, 1)]
         [TestCase(5, 3, 2)]
         [TestCase(6, 3, 3)]
