@@ -41,7 +41,7 @@ steps:
     command: test
     projects: '**/*Tests.csproj'
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --no-build --collect "XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+    arguments: '--logger trx --results-directory CodeCoverage --no-build --collect "XPlat Code Coverage"'
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
