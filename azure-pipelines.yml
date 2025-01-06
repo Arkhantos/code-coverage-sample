@@ -42,17 +42,7 @@ steps:
     projects: '**/*Tests*.csproj'
     publishTestResults: true
     arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage" --settings ./coverlet.runsettings'
-- script: |
-    dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
-    .\reportgenerator.exe "-reports:$(Agent.TempDirectory)\**\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: Run Reportgenerator on Windows
 
-- task: PublishCodeCoverageResults@2
-  displayName: "Publish code coverage"
-  inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
-    pathToSources: '$(Build.SourcesDirectory)/CodeCoverage'
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
 
