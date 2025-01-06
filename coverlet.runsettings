@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
-  <RunConfiguration>
-    <ResultsDirectory>./CodeCoverage/</ResultsDirectory>
-  </RunConfiguration>
   <DataCollectionRunSettings>
     <DataCollectors>
-      <DataCollector friendlyName="XPlat code coverage">
+      <DataCollector friendlyName="Code Coverage">
         <Configuration>
-          <Format>cobertura,opencover</Format>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+               <ModulePath>.*Tests.dll</ModulePath>
+              </Exclude>
+            </ModulePaths>
+          </CodeCoverage>
         </Configuration>
       </DataCollector>
     </DataCollectors>
