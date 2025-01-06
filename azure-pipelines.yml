@@ -50,7 +50,7 @@ steps:
   displayName: Run Reportgenerator on Windows
 - task: PublishCodeCoverageResults@2
   inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)/CoverageResults/Cobertura.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
