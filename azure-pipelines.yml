@@ -43,11 +43,11 @@ steps:
     publishTestResults: true
     arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --settings ./coverlet.runsettings'
 
-- task: reportgenerator@5
-  inputs:
-    reports: '$(Agent.WorkFolder)/**/coverage.cobertura.xml'
-    targetdir: '$(Build.SourcesDirectory)/CoverageResults'
-    reporttypes: 'HtmlInline_AzurePipelines;Cobertura,OpenCover'
+- script: |
+    dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
+    .\reportgenerator.exe "-reports:$(Agent.WorkFolder)\**\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;OpenCover;HTMLInline;HTMLChart"
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: Run Reportgenerator on Windows
 - task: PublishCodeCoverageResults@2
   inputs:
     summaryFileLocation: '$(Build.SourcesDirectory)/CoverageResults/Cobertura.xml'
