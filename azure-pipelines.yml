@@ -1,6 +1,6 @@
 
 variables:
-    buildConfiguration: "Debug"
+    buildConfiguration: "release"
     testProject: "tests/MySample.Tests"
     solution: "MySample.sln"
 
@@ -27,7 +27,7 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.flex.cobertura.reportPaths=$(Agent.TempDirectory)\**\coverage.opencover.xml'
+    extraProperties: 'sonar.flex.cobertura.reportPaths=$(Build.SourcesDirectory)/**/coverage.opencover.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -39,22 +39,23 @@ steps:
   displayName: Test
   inputs:
     command: test
-    projects: '**/*Tests.csproj'
-    publishTestResults: true
-    arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura'
+    projects: '**/*Tests*.csproj'
+    publishTestResults: false
+    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "Code Coverage" --settings "./coverlet.runsettings"'
 
-- script: |
-    dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
-    .\reportgenerator.exe "-reports:$(Agent.TempDirectory)\**\coverage.opencover.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
-  displayName: Run Reportgenerator on Windows
-
-- task: PublishCodeCoverageResults@1
-  displayName: 'Publish code coverage report'
+- task: PublishTestResults@2
+  displayName: 'Publicando test'
   inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)\CodeCoverage\Cobertura.xml'
-    reportDirectory: '$(Build.SourcesDirectory)\CodeCoverage'
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
+    testRunTitle: 'testResult'
+
+- task: PublishCodeCoverageResults@2
+  displayName: "Publish code coverage"
+  inputs:
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/CodeCoverage/coverage.cobertura.xml'
+
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
 
