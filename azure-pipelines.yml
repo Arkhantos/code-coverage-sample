@@ -40,7 +40,7 @@ steps:
   inputs:
     command: test
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
+    arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage" --settings ./coverlet.runsettings'
 
 - task: PublishTestResults@2
   displayName: 'Publicando test'
