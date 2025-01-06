@@ -43,7 +43,7 @@ steps:
     arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
 
 - script: |
-    dotnet dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools
+    dotnet dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools --version 4.6.1
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 
