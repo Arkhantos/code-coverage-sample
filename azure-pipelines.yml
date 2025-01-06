@@ -39,6 +39,7 @@ steps:
   displayName: Test
   inputs:
     command: test
+    projects: '**/*Tests.csproj'
     publishTestResults: false
     arguments: '--logger trx --results-directory CodeCoverage --no-build --collect "XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
 
