@@ -41,7 +41,7 @@ steps:
     command: test
     projects: '**/*Tests.csproj'
     publishTestResults: true
-    arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --settings ./coverlet.runsettings'
+    arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --settings ./coverlet.runsettings -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura'
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
