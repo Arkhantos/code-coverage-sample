@@ -39,8 +39,16 @@ steps:
   displayName: Test
   inputs:
     command: test
-    publishTestResults: true
-    arguments: '--collect:"Code Coverage"'
+    publishTestResults: false
+    arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
+
+- task: PublishTestResults@2
+  displayName: 'Publicando test'
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
+    testRunTitle: 'testResult'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
