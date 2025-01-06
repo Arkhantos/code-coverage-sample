@@ -41,7 +41,7 @@ steps:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "XPlat Code Coverage" --settings ./coverlet.runsettings'
+    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "XPlat Code Coverage"  -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=\opencover,cobertura\'
 
 - task: PublishTestResults@2
   displayName: 'Publicando test'
@@ -54,7 +54,7 @@ steps:
 - task: PublishCodeCoverageResults@2
   displayName: "Publish code coverage"
   inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)\CodeCoverage\coverage.cobertura.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)\CodeCoverage\*\coverage.cobertura.xml'
     pathToSources: '$(Build.SourcesDirectory)\CodeCoverage'
 
 - task: SonarCloudAnalyze@3
