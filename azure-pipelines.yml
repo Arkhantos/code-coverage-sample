@@ -40,7 +40,7 @@ steps:
   inputs:
     command: test
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --collect:"XPlat code coverage" --settings ./coverlet.runsettings'
+    arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
