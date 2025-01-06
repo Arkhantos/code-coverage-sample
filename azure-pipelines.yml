@@ -43,7 +43,7 @@ steps:
     arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
 
 - script: |
-    dotnet tool install dotnet-reportgenerator-globaltool --tool-path .
+    dotnet tool install -g dotnet-reportgenerator-globaltool --add-source https://api.nuget.org/v3/index.json --tool-path .
     .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)/CodeCoverage/coverage.opencover.xml" "-targetdir:CodeCoverage/Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
