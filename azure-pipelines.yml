@@ -41,7 +41,13 @@ steps:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "Code Coverage" --settings "./coverlet.runsettings"'
+    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover,cobertura'
+
+- script: |
+    dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
+    .\reportgenerator.exe "-reports:$(Agent.TempDirectory)\**\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+  displayName: Run Reportgenerator on Windows
 
 - task: PublishTestResults@2
   displayName: 'Publicando test'
@@ -54,7 +60,7 @@ steps:
 - task: PublishCodeCoverageResults@2
   displayName: "Publish code coverage"
   inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)/**/CodeCoverage/coverage.cobertura.xml'
+    summaryFileLocation: '$(Build.SourcesDirectory)\CodeCoverage\coverage.cobertura.xml'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
