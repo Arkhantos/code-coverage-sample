@@ -40,7 +40,7 @@ steps:
   inputs:
     command: test
     publishTestResults: true
-    arguments: '--collect "Code Coverage" --settings "./WebApp/coverlet.runsettings"'
+    arguments: '--collect "Code Coverage" --settings "./coverlet.runsettings"'
 
 - task: PublishCodeCoverageResults@2
   displayName: "Publish code coverage"
