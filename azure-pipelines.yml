@@ -27,7 +27,7 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)/CoverageResults/*opencover.xml'
+    extraProperties: 'sonar.flex.cobertura.reportPaths=$(Build.SourcesDirectory)/**/*cobertura.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -45,7 +45,7 @@ steps:
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
-    .\reportgenerator.exe "-reports:$(Agent.WorkFolder)\**\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;OpenCover;HTMLInline;HTMLChart"
+    .\reportgenerator.exe "-reports:$(Agent.WorkFolder)\**\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 - task: PublishCodeCoverageResults@2
