@@ -39,9 +39,9 @@ steps:
   displayName: Test
   inputs:
     command: test
-    #projects: '**/*Tests.csproj'
+    projects: '**/*Tests.csproj'
     publishTestResults: true
-    arguments: '--configuration Release --no-build --collect "XPlat Code Coverage" --settings ./coverlet.runsettings'
+    arguments: '--configuration $(buildConfiguration) --no-build --collect "XPlat Code Coverage" --settings ./coverlet.runsettings'
 
 - task: PublishCodeCoverageResults@2
   inputs:
