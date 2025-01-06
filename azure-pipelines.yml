@@ -27,7 +27,7 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)\*\*coverage.xml'
+    extraProperties: 'sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Build
@@ -40,12 +40,12 @@ steps:
   inputs:
     command: test
     publishTestResults: true
-    arguments: '--collect "Code Coverage" --settings "./coverlet.runsettings"'
+    arguments: '--collect:"XPlat Code Coverage" --settings "./coverlet.runsettings"'
 
 - task: PublishCodeCoverageResults@2
   displayName: "Publish code coverage"
   inputs:
-    summaryFileLocation: '$(Agent.TempDirectory)/*/coverage.cobertura.xml'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
