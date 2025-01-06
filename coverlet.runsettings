@@ -8,9 +8,15 @@
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
           <Format>cobertura,opencover</Format>
+          <CodeCoverage>
+            <ModulePaths>
+              <Exclude>
+               <ModulePath>.*Tests*.dll</ModulePath>
+              </Exclude>
+            </ModulePaths>
+          </CodeCoverage>
         </Configuration>
       </DataCollector>
     </DataCollectors>
   </DataCollectionRunSettings>
 </RunSettings>
-
