@@ -41,10 +41,10 @@ steps:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: false
-    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "XPlat Code Coverage"  -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover'
+    arguments: '--logger trx --results-directory CodeCoverage --configuration $(buildConfiguration) --collect "Code Coverage" --settings "./WebApp/coverlet.runsettings"'
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
-    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\CodeCoverage\*\coverage.opencover.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
+    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\CodeCoverage\*\coverage.cobertura.xml" "-targetdir:CodeCoverage" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 - task: PublishTestResults@2
