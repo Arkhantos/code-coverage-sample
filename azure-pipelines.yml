@@ -43,13 +43,11 @@ steps:
     arguments: '--logger trx --results-directory CodeCoverage --collect:"Code Coverage"'
 
 - script: |
-    dotnet dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools --version 4.6.1
+    dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
+    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)/CodeCoverage/coverage.opencover.xml" "-targetdir:CodeCoverage/Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 
-- script: reportgenerator "-reports:$(Build.SourcesDirectory)/CodeCoverage/coverage.opencover.xml" "-targetdir:CodeCoverage/Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
-  displayName: Run Reportgenerator on Windows
-  continueOnError: true
 - task: PublishTestResults@2
   displayName: 'Publicando test'
   inputs:
