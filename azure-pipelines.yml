@@ -26,7 +26,7 @@ steps:
   displayName: 'dotnet build $(buildConfiguration).'
 
 - script: |
-    dotnet test --no-build --no-restore --collect:"XPlat Code Coverage" /p:Configuration=$Cfg /p:CollectCoverage=true /p:CoverletOutput=.\CodeCoverage\  /p:CoverletOutputFormat=\"cobertura,opencover\"
+    dotnet test --no-build --no-restore --collect "Code Coverage"
   displayName: 'dotnet test'
 
 - task: SonarCloudAnalyze@3
