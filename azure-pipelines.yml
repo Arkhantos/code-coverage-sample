@@ -44,7 +44,7 @@ steps:
 
 - script: |
     dotnet tool install dotnet-reportgenerator-globaltool --version 4.6.1 --tool-path .
-    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)/CodeCoverage/coverage.opencover.xml" "-targetdir:CodeCoverage/Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
+    .\reportgenerator.exe "-reports:$(Build.SourcesDirectory)\CodeCoverage\coverage.opencover.xml" "-targetdir:CodeCoverage\Cobertura" "-reporttypes:Cobertura;HTMLInline;HTMLChart"
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
   displayName: Run Reportgenerator on Windows
 
