@@ -20,7 +20,7 @@ namespace MySample.NUnitTests
         {
             Assert.AreEqual(ImportantLib.Add(x, y), z);
         }
-/*
+
         [TestCase(3, 2, 1)]
         [TestCase(5, 3, 2)]
         [TestCase(6, 3, 3)]
@@ -28,7 +28,7 @@ namespace MySample.NUnitTests
         {
             Assert.AreEqual(ImportantLib.Substract(x, y), z);
         }
-
+/*
         [TestCase(-3, 3)]
         [TestCase(-5, 5)]
         public void PartialTest(int x, int y)
