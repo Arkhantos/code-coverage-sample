@@ -27,7 +27,7 @@ steps:
     scannerMode: 'dotnet'
     projectKey: 'jabadrian_code-coverage-sample'
     projectName: 'code-coverage-sample'
-    extraProperties: 'sonar.flex.cobertura.reportPaths=$(Build.SourcesDirectory)/CodeCoverage/Cobertura.xml'
+    extraProperties: 'sonar.flex.cobertura.reportPaths=$(Agent.TempDirectory)\**\coverage.opencover.xml'
 
 - task: DotNetCoreCLI@2
   displayName: Build
