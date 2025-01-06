@@ -40,7 +40,7 @@ steps:
   inputs:
     command: test
     publishTestResults: true
-    arguments: '--collect:"Code Coverage" --settings "./coverlet.runsettings"'
+    arguments: '--collect:"Code Coverage"'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
