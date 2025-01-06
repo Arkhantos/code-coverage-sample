@@ -18,6 +18,7 @@ steps:
     packageType: sdk
     version: 2.2.x
     installationPath: $(Agent.ToolsDirectory)/dotnet
+
 - task: SonarCloudPrepare@3
   displayName: 'coverage from: $(Build.SourcesDirectory)'
   inputs:
@@ -31,16 +32,15 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: '**/WebApp.csproj'
-    arguments: '--configuration $(BuildConfiguration)'
-  
+    projects: '$(solution)'
+    arguments: '--configuration $(buildConfiguration)'
+
 - task: DotNetCoreCLI@2
   displayName: Test
   inputs:
     command: test
-    projects: '$(solution)'
     publishTestResults: true
-    arguments: '--configuration $(BuildConfiguration) --collect "Code Coverage"'
+    arguments: '--collect "Code Coverage"'
 
 
 - task: SonarCloudAnalyze@3
@@ -48,11 +48,6 @@ steps:
 
 - task: SonarCloudPublish@3
   displayName: 'Publish Quality Gate Result'
-
-- task: PublishTestResults@2
-  inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
 
 - task: DotNetCoreCLI@2
   inputs:
