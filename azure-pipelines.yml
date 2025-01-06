@@ -12,6 +12,12 @@ pool:
   demands: Agent.Name -equals jaba-windows
 
 steps:
+- task: UseDotNet@2
+  displayName: Install .NET 2 sdk 
+  inputs:
+    packageType: sdk
+    version: 2.2.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 - task: SonarCloudPrepare@3
   displayName: 'coverage from: $(Build.SourcesDirectory)'
   inputs:
@@ -22,12 +28,20 @@ steps:
     projectName: 'code-coverage-sample'
     extraProperties: 'sonar.cs.opencover.reportsPaths=$(Build.SourcesDirectory)\*\*coverage.xml'
 
-- script: dotnet build $(solution) --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration).'
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '**/WebApp.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+  
+- task: DotNetCoreCLI@2
+  displayName: Test
+  inputs:
+    command: test
+    projects: '$(solution)'
+    publishTestResults: true
+    arguments: '--configuration $(BuildConfiguration) --collect "Code Coverage"'
 
-- script: |
-    dotnet test --no-build --no-restore --collect:"XPlat Code Coverage" /p:Configuration=$Cfg /p:CollectCoverage=true /p:CoverletOutput=.\CodeCoverage\  /p:CoverletOutputFormat=\"cobertura,opencover\"
-  displayName: 'dotnet test'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
