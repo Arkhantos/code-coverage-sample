@@ -43,12 +43,18 @@ steps:
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
-  displayName: Test
+  displayName: 'Test in windows'
   inputs:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: true
-    arguments: '--configuration $(buildConfiguration) --collect "Code Coverage" --settings ./coverlet.runsettings'
+    arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage" --settings ./coverlet.runsettings'
+  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+
+- script: |
+    dotnet test --logger trx --no-build --collect "Code Coverage" --settings ./coverlet.runsettings
+  displayName: 'Test in Linux'
+  condition: eq( variables['Agent.OS'], 'Linux' )
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
