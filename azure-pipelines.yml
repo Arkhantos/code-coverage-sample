@@ -52,7 +52,7 @@ steps:
   condition: eq( variables['Agent.OS'], 'Windows_NT' )
 
 - script: |
-    dotnet test $(Build.SourcesDirectory)/**/*Tests*.csproj --configuration $(buildConfiguration) --logger trx --collect "Code Coverage" --settings ./coverlet.runsettings
+    dotnet test $(Build.SourcesDirectory)/tests/MySample.Tests/MySample.Tests.csproj --configuration $(buildConfiguration) --logger trx --collect "Code Coverage" --settings ./coverlet.runsettings
   displayName: 'Test in Linux'
   condition: eq( variables['Agent.OS'], 'Linux' )
 
