@@ -29,7 +29,7 @@ namespace MySample.NUnitTests
             Assert.AreEqual(ImportantLib.Substract(x, y), z);
         }
 
-       // [TestCase(-3, 3)]
+        [TestCase(-3, 3)]
         [TestCase(-5, 5)]
         public void PartialTest(int x, int y)
         {
