@@ -48,7 +48,7 @@ steps:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: true
-    arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage" --settings ./coverlet.runsettings'
+    arguments: '--configuration $(buildConfiguration) --collect "Code Coverage" --settings ./coverlet.runsettings'
 
 - task: SonarCloudAnalyze@3
   displayName: 'Run Code Analysis'
