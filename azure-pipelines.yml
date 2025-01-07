@@ -48,8 +48,9 @@ steps:
     command: test
     projects: '**/*Tests*.csproj'
     publishTestResults: true
-    arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage" --settings ./coverlet.runsettings'
-  condition: eq( variables['Agent.OS'], 'Windows_NT' )
+    arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage"'
+  #  arguments: '--configuration $(buildConfiguration) --no-build --collect "Code Coverage" --settings ./coverlet.runsettings'
+ # condition: eq( variables['Agent.OS'], 'Windows_NT' )
 
 - script: |
     dotnet test $(Build.SourcesDirectory)/tests/MySample.Tests/MySample.Tests.csproj --configuration $(buildConfiguration) --logger trx --collect "Code Coverage" --settings ./coverlet.runsettings
