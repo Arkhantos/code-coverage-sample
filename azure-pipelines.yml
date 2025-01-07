@@ -4,19 +4,19 @@ variables:
     testProject: "tests/MySample.Tests"
     solution: "MySample.sln"
 
-strategy:
-  matrix:
-    linux:
-      imageName: 'jaba-vm'
-    windows:
-      imageName: 'jaba-windows'
+#strategy:
+#  matrix:
+ #   linux:
+ #     imageName: 'jaba-vm'
+  #  windows:
+  #    imageName: 'jaba-windows'
 
 trigger:
 - master
 
 pool:
   name: 'TestPool'
-  demands: Agent.Name -equals $(imageName)
+  demands: Agent.Name -equals jaba-windows
 
 steps:
 - task: UseDotNet@2
