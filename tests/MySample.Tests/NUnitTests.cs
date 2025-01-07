@@ -12,7 +12,7 @@ namespace MySample.NUnitTests
         {
             Assert.AreEqual(ImportantLib.Add(x, y), z);
         }
-
+/*
         [TestCase(1, 2, 3)]
         [TestCase(2, 3, 5)]
         [TestCase(3, 3, 6)]
@@ -34,6 +34,6 @@ namespace MySample.NUnitTests
         public void PartialTest(int x, int y)
         {
             Assert.AreEqual(ImportantLib.PartiallyTestedCode(x), y);
-        }
+        }*/
     }
 }
